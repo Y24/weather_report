@@ -14,6 +14,7 @@ class CityManagerTest {
     void execute() {
         CityManager manager = new CityManager();
         CityAction action = new CityAction(CityActionType.fetch);
-        manager.execute(action);
+        final var result = manager.execute(action);
+        return;
     }
 }

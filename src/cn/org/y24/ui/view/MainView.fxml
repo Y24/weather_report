@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.org.y24.ui.controller.MainViewController">
+    <top>
+        <MenuBar prefHeight="30.0" prefWidth="691.0" BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Account">
+                <MenuItem mnemonicParsing="false" onAction="#doLogout" text="Logout">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#doDispose" text="Dispose">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+            </Menu>
+            <Menu mnemonicParsing="false" text="History">
+                <MenuItem mnemonicParsing="false" onAction="#showHistory" text="Show">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#doPull" text="Pull">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#doPush" text="Push">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" onAction="#showAllPlaces" text="Places">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                    </accelerator>
+                </MenuItem>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane prefHeight="431.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <TextField fx:id="cityInputTextId" alignment="CENTER" layoutX="189.0" layoutY="97.0" onAction="#doQuery" onKeyTyped="#doRecommend" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="90.0">
+                <font>
+                    <Font size="24.0" />
+                </font>
+                <effect>
+                    <DropShadow height="0.0" radius="2.0" width="10.0" />
+                </effect>
+            </TextField>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="328.0" layoutY="14.0" text="请输入城市名进行天气查询" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="14.0">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+                <effect>
+                    <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+                </effect>
+            </Label>
+            <ListView fx:id="recommendListViewId" layoutX="189.0" layoutY="136.0" prefHeight="70.0" visible="false" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="298.0" AnchorPane.topAnchor="136.0" />
+            <AnchorPane fx:id="queryResultContainerId" layoutX="11.0" layoutY="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+                <HBox alignment="CENTER" layoutX="81.0" layoutY="63.0" spacing="30.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="40.0">
+                    <effect>
+                        <DropShadow height="1.0" radius="0.0" width="0.0" />
+                    </effect>
+                    <VBox alignment="CENTER" prefHeight="62.0" prefWidth="100.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="温度">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="tempLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="86.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                    <VBox alignment="CENTER" layoutX="226.0" layoutY="20.0" prefHeight="62.0" prefWidth="100.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="天气">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="weatherLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="86.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                    <VBox alignment="CENTER" layoutX="291.0" layoutY="20.0" prefHeight="62.0" prefWidth="100.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="湿度">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="humidityLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="86.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                    <VBox alignment="CENTER" layoutX="226.0" layoutY="20.0" prefHeight="62.0" prefWidth="100.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="风向">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="windLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="86.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+                <HBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
+                    <effect>
+                        <DropShadow height="1.0" radius="0.0" width="0.0" />
+                    </effect>
+                    <VBox alignment="CENTER" layoutX="226.0" layoutY="20.0" prefHeight="61.0" prefWidth="188.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="更新时间">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="timeLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="188.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                    <VBox alignment="CENTER" layoutX="226.0" layoutY="20.0" prefHeight="61.0" prefWidth="317.0" spacing="10.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="今日提示">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="tipsLabelId" alignment="CENTER" prefHeight="21.0" prefWidth="314.0">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+            </AnchorPane>
+            <HBox alignment="CENTER_LEFT" layoutX="118.0" layoutY="181.0" prefHeight="34.0" prefWidth="200.0" spacing="30.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="373.0" AnchorPane.topAnchor="200.0">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="107.0" text="查询结果">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label fx:id="queryResultLabelId">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Label fx:id="cityNameLabelId" visible="false">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+            </HBox>
+            <Separator layoutX="80.0" layoutY="225.0" prefHeight="15.0" prefWidth="531.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="240.0" />
+            <Label alignment="CENTER" layoutX="241.0" layoutY="56.0" prefHeight="21.0" prefWidth="209.0" text="Tips: jiangxi,nanchang" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="50.0">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+        </AnchorPane>
+    </center>
+</BorderPane>

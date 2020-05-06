@@ -18,19 +18,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         SceneManager primarySceneManager = new SceneManager(primaryStage);
-//        primaryStage.setResizable(false);
         Parent rootParent = primarySceneManager.init("LoginView.fxml", stageManager);
         Scene rootScene = new Scene(rootParent, 900, 600);
-//        primaryStage.setResizable(false);
-       /* Parent rootParent = primarySceneManager.init("MainView.fxml", StageManager);
-        Scene rootScene = new Scene(rootParent);
-        primaryStage.setMaximized(true);
-        primaryStage.setResizable(true);*/
         primarySceneManager.add(rootScene, primarySceneName);
         primarySceneManager.select(primarySceneName);
         stageManager.add(primarySceneManager, primarySceneManagerName);
         stageManager.showOnly(primarySceneManagerName);
-
     }
 
 

@@ -106,7 +106,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
     </Label>
-    <Hyperlink fx:id="loginLink" alignment="CENTER" contentDisplay="CENTER" layoutX="382.0" layoutY="365.0"
+    <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="382.0" layoutY="365.0"
                onAction="#switchToLoginView" text="Login now!" AnchorPane.bottomAnchor="200.0"
                AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="380.0">
         <font>

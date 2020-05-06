@@ -4,6 +4,7 @@ import cn.org.y24.Main;
 import cn.org.y24.actions.AccountAction;
 import cn.org.y24.entity.AccountEntity;
 import cn.org.y24.enums.AccountActionType;
+import cn.org.y24.interfaces.IManager;
 import cn.org.y24.manager.AccountManager;
 import cn.org.y24.ui.framework.BaseStageController;
 import cn.org.y24.ui.framework.StageManager;
@@ -11,28 +12,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class RegisterViewController extends BaseStageController {
-    private final AccountManager accountManager = new AccountManager();
-    @FXML
-    Label successLabel;
-    @FXML
-    Label failureLabel;
     private StageManager stageManager;
+    private final IManager<AccountAction> accountManager = new AccountManager();
     @FXML
-    Button registerButtonID;
+    private Label successLabel;
     @FXML
-    TextField userTextFieldID;
+    private Label failureLabel;
     @FXML
-    PasswordField passwordID;
-
+    private Button registerButtonID;
     @FXML
-    Hyperlink loginLink;
-
+    private TextField userTextFieldID;
+    @FXML
+    private PasswordField passwordID;
 
     @Override
     public void setStageManager(StageManager stageManager) {
         this.stageManager = stageManager;
     }
-
 
     @FXML
     void ActionForUser() {
@@ -44,7 +40,8 @@ public class RegisterViewController extends BaseStageController {
         registerButtonID.requestFocus();
     }
 
-    public void registerAction() {
+    @FXML
+    private void registerAction() {
         if (userTextFieldID.getText().equals("") || passwordID.getText().equals("")) {
             failureLabel.setVisible(true);
             successLabel.setVisible(false);
@@ -55,10 +52,10 @@ public class RegisterViewController extends BaseStageController {
                 account));
         failureLabel.setVisible(!result);
         successLabel.setVisible(result);
-
     }
 
-    public void switchToLoginView() {
+    @FXML
+    private void switchToLoginView() {
         failureLabel.setVisible(false);
         successLabel.setVisible(false);
         stageManager.get(Main.primarySceneManagerName).select(Main.primarySceneName);

@@ -14,7 +14,7 @@ class CityManagerTest {
     void execute() {
         CityManager manager = new CityManager();
         CityAction action = new CityAction(CityActionType.fetch);
-        final var result = manager.execute(action);
-        return;
+        assertTrue(manager.execute(action));
+        System.out.println(action.getCityList().size());
     }
 }

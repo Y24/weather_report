@@ -13,107 +13,120 @@
   ~  All rights reserved.
   -->
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.org.y24.ui.controller.LoginViewController">
-    <Label layoutX="49.0" layoutY="123.0" text="Username" underline="true" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="150.0">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.org.y24.ui.controller.LoginViewController">
+    <Label layoutX="49.0" layoutY="123.0" text="Username" underline="true" AnchorPane.leftAnchor="100.0"
+           AnchorPane.topAnchor="150.0">
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
         <textFill>
             <LinearGradient>
                 <stops>
-                    <Stop color="#32d8e8" />
-                    <Stop color="#d3c390" offset="1.0" />
+                    <Stop color="#32d8e8"/>
+                    <Stop color="#d3c390" offset="1.0"/>
                 </stops>
             </LinearGradient>
         </textFill>
         <effect>
             <Blend>
                 <topInput>
-                    <Glow />
+                    <Glow/>
                 </topInput>
             </Blend>
         </effect>
     </Label>
-    <Label alignment="TOP_CENTER" layoutX="339.0" layoutY="29.0" text="Welcome" textAlignment="CENTER" textFill="#3e7ce8" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="30.0">
+    <Label alignment="TOP_CENTER" layoutX="339.0" layoutY="29.0" text="Welcome" textAlignment="CENTER"
+           textFill="#3e7ce8" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="30.0">
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
         <font>
-            <Font size="36.0" />
+            <Font size="36.0"/>
         </font>
     </Label>
-    <Separator layoutX="269.0" layoutY="93.0" prefHeight="24.0" prefWidth="272.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="90.0" />
-    <Button fx:id="loginButtonID" layoutX="389.0" layoutY="411.0" mnemonicParsing="false" onAction="#loginAction" onMouseClicked="#loginAction" text="Login" textAlignment="CENTER" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="389.0">
+    <Separator layoutX="269.0" layoutY="93.0" prefHeight="24.0" prefWidth="272.0" AnchorPane.leftAnchor="100.0"
+               AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="90.0"/>
+    <Button fx:id="loginButtonID" layoutX="389.0" layoutY="411.0" mnemonicParsing="false" onAction="#loginAction"
+            onMouseClicked="#loginAction" text="Login" textAlignment="CENTER" AnchorPane.bottomAnchor="130.0"
+            AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="389.0">
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
     </Button>
-    <Label layoutX="49.0" layoutY="208.0" text="Password" underline="true" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="250.0">
+    <Label layoutX="49.0" layoutY="208.0" text="Password" underline="true" AnchorPane.leftAnchor="100.0"
+           AnchorPane.topAnchor="250.0">
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
         <textFill>
             <LinearGradient>
                 <stops>
-                    <Stop color="#32d8e8" />
-                    <Stop color="#d3c390" offset="1.0" />
+                    <Stop color="#32d8e8"/>
+                    <Stop color="#d3c390" offset="1.0"/>
                 </stops>
             </LinearGradient>
         </textFill>
         <effect>
             <Blend>
                 <topInput>
-                    <Glow />
+                    <Glow/>
                 </topInput>
             </Blend>
         </effect>
     </Label>
-    <TextField fx:id="userTextFieldID" layoutX="318.0" layoutY="125.0" onAction="#ActionForUser" prefHeight="46.0" prefWidth="235.0" text="y24" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
+    <TextField fx:id="userTextFieldID" layoutX="318.0" layoutY="125.0" onAction="#ActionForUser" prefHeight="46.0"
+               prefWidth="235.0" text="y24" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
     </TextField>
-    <PasswordField fx:id="passwordID" layoutX="318.0" layoutY="210.0" onAction="#ActionForPassword" prefHeight="46.0" prefWidth="235.0" text="yue" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
+    <PasswordField fx:id="passwordID" layoutX="318.0" layoutY="210.0" onAction="#ActionForPassword" prefHeight="46.0"
+                   prefWidth="235.0" text="yue" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
     </PasswordField>
-    <Label fx:id="messageLabel" layoutX="114.0" layoutY="315.0" prefHeight="50.0" prefWidth="301.0" text="Authorization failed!" textAlignment="CENTER" textFill="#ee0e0e" underline="true" visible="false" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="315.0">
+    <Label fx:id="messageLabel" layoutX="114.0" layoutY="315.0" prefHeight="50.0" prefWidth="301.0"
+           text="Authorization failed!" textAlignment="CENTER" textFill="#ee0e0e" underline="true" visible="false"
+           AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="315.0">
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
         <padding>
-            <Insets bottom="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" right="10.0" top="10.0"/>
         </padding>
     </Label>
-   <Hyperlink fx:id="registerLink" alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="372.0" onAction="#switchToRegisterView" prefHeight="29.0" prefWidth="169.0" text="Register now!" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="365.0">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-      <textFill>
-         <LinearGradient>
-            <stops>
-               <Stop>
-                  <color>
-                     <Color red="0.19607843458652496" green="0.8470588326454163" blue="0.9098039269447327" />
-                  </color>
-               </Stop>
-               <Stop offset="1.0">
-                  <color>
-                     <Color red="0.8274509906768799" green="0.7647058963775635" blue="0.5647059082984924" />
-                  </color>
-               </Stop>
-            </stops>
-         </LinearGradient>
-      </textFill>
-   </Hyperlink>
+    <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="372.0"
+               onAction="#switchToRegisterView" prefHeight="29.0" prefWidth="169.0" text="Register now!"
+               AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="365.0">
+        <font>
+            <Font name="System Bold" size="18.0"/>
+        </font>
+        <textFill>
+            <LinearGradient>
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color red="0.19607843458652496" green="0.8470588326454163" blue="0.9098039269447327"/>
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.8274509906768799" green="0.7647058963775635" blue="0.5647059082984924"/>
+                        </color>
+                    </Stop>
+                </stops>
+            </LinearGradient>
+        </textFill>
+    </Hyperlink>
 </AnchorPane>

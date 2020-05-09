@@ -4,10 +4,12 @@ import cn.org.y24.entity.CityEntity;
 import cn.org.y24.entity.WeatherEntity;
 import cn.org.y24.enums.CityWeatherActionType;
 
+import java.util.List;
+
 public class CityWeatherAction {
     private final CityWeatherActionType type;
     private final CityEntity cityEntity;
-    WeatherEntity weather;
+    private List<WeatherEntity> weather;
 
     public CityEntity getCityEntity() {
         return cityEntity;
@@ -17,11 +19,11 @@ public class CityWeatherAction {
         return type;
     }
 
-    public WeatherEntity getWeather() {
+    public List<WeatherEntity> getWeather() {
         return weather;
     }
 
-    public void setWeather(WeatherEntity weather) {
+    public void setWeather( List<WeatherEntity> weather) {
         this.weather = weather;
     }
 

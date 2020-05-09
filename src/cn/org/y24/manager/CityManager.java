@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static cn.org.y24.utils.StringMatcher.getDivByClassname;
+import static cn.org.y24.utils.StringMatcher.getStrByClassname;
 
 /**
  * Fetch all the available cities in the cloud.
@@ -34,7 +34,7 @@ public class CityManager implements IManager<CityAction>, IUrlProvider {
                         return false;
                     }
                     final var reader = handler.getReader();
-                    final Map<String, String> provinces = getProvinces(getDivByClassname(reader, divClass));
+                    final Map<String, String> provinces = getProvinces(getStrByClassname(reader, "div", divClass, false));
                     provinces.forEach((province, cnName) ->
                             cityList.addAll(getCities(province, cnName))
                     );
@@ -70,7 +70,7 @@ public class CityManager implements IManager<CityAction>, IUrlProvider {
         final Pattern groupPattern = Pattern.compile("(\\s*<li>\\s*<a\\s* href=\"https://tianqi.moji.com/weather/china/" + province + "/)([a-zA-Z-]+)(\">)([^<]+)(</a>\\s*</li>\\s*)");
         Matcher matcher;
         try {
-            matcher = pattern.matcher(getDivByClassname(reader, "city clearfix"));
+            matcher = pattern.matcher(getStrByClassname(reader, "div", "city clearfix", false));
             while (matcher.find()) {
                 final Matcher groupMatcher = groupPattern.matcher(matcher.group());
                 if (groupMatcher.matches()) {

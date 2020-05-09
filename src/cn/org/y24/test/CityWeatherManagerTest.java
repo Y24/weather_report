@@ -22,8 +22,9 @@ class CityWeatherManagerTest {
         ans.put(new CityEntity("jiangxi", "fuzhou"), true);
         ans.put(new CityEntity("jiangxi", "fuzho"), false);
         ans.forEach((city, result) -> {
-            final CityWeatherAction action = new CityWeatherAction(CityWeatherActionType.fetch, city);
+            final CityWeatherAction action = new CityWeatherAction(CityWeatherActionType.fetch7days, city);
             assertEquals(result, manager.execute(action));
+            return;
         });
 
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.input.*?>
@@ -8,43 +9,43 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.org.y24.ui.controller.MainViewController">
     <top>
-        <MenuBar prefHeight="30.0" prefWidth="691.0" BorderPane.alignment="CENTER">
-            <Menu mnemonicParsing="false" text="Account">
-                <MenuItem mnemonicParsing="false" onAction="#doLogout" text="Logout">
+        <MenuBar fx:id="menuBarId" prefHeight="30.0" prefWidth="691.0" BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="账户">
+                <MenuItem mnemonicParsing="false" onAction="#doLogout" text="退出">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#doDispose" text="Dispose">
+                <MenuItem mnemonicParsing="false" onAction="#doDispose" text="销毁">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
             </Menu>
-            <Menu mnemonicParsing="false" text="History">
-                <MenuItem mnemonicParsing="false" onAction="#showHistory" text="Show">
+            <Menu mnemonicParsing="false" text="历史记录">
+                <MenuItem mnemonicParsing="false" onAction="#showHistory" text="查询">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#doPull" text="Pull">
+                <MenuItem mnemonicParsing="false" onAction="#doPull" text="拉取">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#doPush" text="Push">
+                <MenuItem mnemonicParsing="false" onAction="#doPush" text="同步">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <MenuItem mnemonicParsing="false" onAction="#showAllPlaces" text="Places">
+            <Menu mnemonicParsing="false" text="帮助">
+                <MenuItem mnemonicParsing="false" onAction="#showAllPlaces" text="所有地点">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                        <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About">
+                <MenuItem mnemonicParsing="false" onAction="#showAbout" text="关于">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                     </accelerator>
@@ -71,7 +72,7 @@
                 </effect>
             </Label>
             <ListView fx:id="recommendListViewId" layoutX="189.0" layoutY="136.0" prefHeight="70.0" visible="false" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="298.0" AnchorPane.topAnchor="136.0" />
-            <AnchorPane fx:id="queryResultContainerId" layoutX="11.0" layoutY="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+            <AnchorPane fx:id="queryResultContainerId" layoutX="11.0" layoutY="240.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
                 <HBox alignment="CENTER" layoutX="81.0" layoutY="63.0" spacing="30.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="40.0">
                     <effect>
                         <DropShadow height="1.0" radius="0.0" width="0.0" />
@@ -173,11 +174,45 @@
                 </Label>
             </HBox>
             <Separator layoutX="80.0" layoutY="225.0" prefHeight="15.0" prefWidth="531.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="240.0" />
-            <Label alignment="CENTER" layoutX="241.0" layoutY="56.0" prefHeight="21.0" prefWidth="209.0" text="Tips: jiangxi,nanchang" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="50.0">
+            <Label alignment="CENTER" layoutX="241.0" layoutY="56.0" prefHeight="21.0" prefWidth="209.0" text="格式: jiangxi,nanchang" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="50.0">
                 <font>
                     <Font size="18.0" />
                 </font>
             </Label>
+            <CheckBox fx:id="choiceBoxId" layoutX="502.0" layoutY="153.0" mnemonicParsing="false" text="查询七日天气" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="150.0">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </CheckBox>
+            <AnchorPane layoutX="10.0" layoutY="250.0" minWidth="300.0" AnchorPane.bottomAnchor="0.0"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="260.0">
+                <TableView fx:id="tableViewId" fixedCellSize="80.0" layoutX="134.0" layoutY="46.0" minWidth="681.0"
+                           prefWidth="681.0" visible="false" AnchorPane.bottomAnchor="40.0"
+                           AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="50.0">
+                    <columns>
+                        <TableColumn fx:id="date7DaysId" editable="false" maxWidth="160.0" minWidth="160.0"
+                                     prefWidth="160.0" resizable="false" text="日期"/>
+                        <TableColumn fx:id="weather7DaysId" maxWidth="160.0" minWidth="160.0" prefWidth="160.0"
+                                     resizable="false" text="天气"/>
+                        <TableColumn fx:id="temp7DaysId" maxWidth="160.0" minWidth="160.0" prefWidth="160.0"
+                                     resizable="false" text="温度"/>
+                        <TableColumn fx:id="updateTime7DaysId" maxWidth="160.0" minWidth="160.0" prefWidth="160.0"
+                                     resizable="false" text="更新时间"/>
+                    </columns>
+                    <opaqueInsets>
+                        <Insets top="10.0"/>
+                    </opaqueInsets>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <effect>
+                        <DropShadow height="0.0" radius="3.0" width="14.0"/>
+                    </effect>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </TableView>
+            </AnchorPane>
         </AnchorPane>
     </center>
 </BorderPane>

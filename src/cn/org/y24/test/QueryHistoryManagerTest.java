@@ -28,7 +28,7 @@ class QueryHistoryManagerTest {
         cities.add(new CityEntity("sichuan", "chengdu"));
         final List<QueryHistoryEntity> data = new ArrayList<>();
         cities.forEach(cityEntity -> {
-            final var action = new CityWeatherAction(CityWeatherActionType.fetch, cityEntity);
+            final var action = new CityWeatherAction(CityWeatherActionType.fetchToday, cityEntity);
             if (cityWeatherManager.execute(action)) {
                 data.add(new QueryHistoryEntity(cityEntity, new Date(), action.getWeather()));
             }

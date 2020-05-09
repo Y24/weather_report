@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WeatherEntity implements IEntity {
-    public final static WeatherEntity nullWeatherEntity = new WeatherEntity("", 0, "", "", "", "", "");
+    public final static WeatherEntity nullWeatherEntity = new WeatherEntity("", "", "", "", "", "", "");
     private final String alerts;
-    private final int temperature;
+    private final String temperature;
     private final String weather;
     private final String lastUpdateTime;
     /// 湿度
@@ -24,7 +24,7 @@ public class WeatherEntity implements IEntity {
         assert (!target.equals(""));
         final String[] strings = target.split("/", 8);
         this.alerts = strings[0];
-        this.temperature = Integer.parseInt(strings[1]);
+        this.temperature = strings[1];
         this.weather = strings[2];
         this.lastUpdateTime = strings[3];
         this.humidity = strings[4];
@@ -32,7 +32,7 @@ public class WeatherEntity implements IEntity {
         this.tips = strings[6];
     }
 
-    public WeatherEntity(String alerts, int temperature, String humidity, String weather, String windInfo, String lastUpdateTime, String tips) {
+    public WeatherEntity(String alerts, String temperature, String humidity, String weather, String windInfo, String lastUpdateTime, String tips) {
         this.alerts = alerts;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -42,10 +42,9 @@ public class WeatherEntity implements IEntity {
         this.tips = tips;
     }
 
-    public int getTemperature() {
+    public String getTemperature() {
         return temperature;
     }
-
     public String getHumidity() {
         return humidity;
     }

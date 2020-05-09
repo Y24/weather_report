@@ -6,14 +6,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class StringMatcher {
-    public static String getDivByClassname(BufferedReader reader, String classname) throws IOException {
-        Pattern divStartPattern = Pattern.compile("\\s*<div class=\"" + classname + "\">\\s*");
-        Pattern divEndPattern = Pattern.compile("\\s*</div>\\s*");
+    public static String getStrByClassname(BufferedReader reader, String tagName, String classname, boolean nullable) throws IOException {
+        Pattern nullStartPattern = Pattern.compile("\\s*<" + tagName + "\\s*>\\s*");
+        Pattern startPattern = Pattern.compile("\\s*<" + tagName + "\\s*class=\"" + classname + "\"\\s*>\\s*");
+        Pattern divEndPattern = Pattern.compile("\\s*</" + tagName + ">\\s*");
         String line;
         StringBuilder result = new StringBuilder();
         do {
             line = reader.readLine();
-            if (divStartPattern.matcher(line).matches()) {
+            if ((classname.equals("") || nullable) && nullStartPattern.matcher(line).matches() || startPattern.matcher(line).matches()) {
                 result.append(line);
                 break;
             }

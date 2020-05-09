@@ -18,10 +18,10 @@ public class AboutMessage {
     @Override
     public String toString() {
         return
-                " Author: '" + author + '\'' + '\n' +
-                        " Version: '" + version + '\'' + '\n' +
+                " 作者: '" + author + '\'' + '\n' +
+                        " 版本: '" + version + '\'' + '\n' +
                         " GitHub: '" + GitHub + '\'' + '\n' +
-                        " DevEnv: '" + DevEnv + '\'' + '\n' +
-                        " Introduction: '" + introduction + '\'' + '\n';
+                        " 开发环境: '" + DevEnv + '\'' + '\n' +
+                        " 介绍: '" + introduction + '\'' + '\n';
     }
 }

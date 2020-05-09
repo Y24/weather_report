@@ -5,17 +5,15 @@ import cn.org.y24.interfaces.IEntity;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class QueryHistoryEntity implements IEntity {
     private static final DateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final CityEntity city;
     private final Date date;
-    private final WeatherEntity weather;
+    private final List<WeatherEntity> weather;
 
-    public QueryHistoryEntity(CityEntity city, Date date, WeatherEntity weather) {
+    public QueryHistoryEntity(CityEntity city, Date date, List<WeatherEntity> weather) {
         this.city = city;
         this.date = date;
         this.weather = weather;
@@ -25,7 +23,11 @@ public class QueryHistoryEntity implements IEntity {
         final String[] strings = format.split("/", 3);
         city = new CityEntity(strings[0]);
         date = dataFormat.parse(strings[1]);
-        weather = new WeatherEntity(strings[2]);
+        final String[] weathers = strings[2].split("\\|");
+        weather = new ArrayList<>();
+        for (String s : weathers) {
+            weather.add(new WeatherEntity(s));
+        }
     }
 
     public String toString() {

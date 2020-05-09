@@ -10,12 +10,11 @@ import cn.org.y24.entity.WeatherEntity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static cn.org.y24.utils.StringMatcher.getDivByClassname;
+import static cn.org.y24.utils.StringMatcher.getStrByClassname;
 import static cn.org.y24.utils.StringMatcher.match;
 
 /**
@@ -24,13 +23,25 @@ import static cn.org.y24.utils.StringMatcher.match;
 public class CityWeatherManager implements IManager<CityWeatherAction>, IUrlProvider {
 
     private CityEntity city;
-    private static final String[] divClasses = {
+    private CityWeatherActionType type;
+    private static final String[] toDayClasses = {
             "wea_alert clearfix", "wea_weather clearfix", "wea_about clearfix", "wea_tips clearfix"
+    };
+    private static final String[] sevenDaysClasses = {
+            "detail_future_title", "clearfix"
     };
 
     @Override
     public String getUrl() {
-        return "https://tianqi.moji.com/weather/china" +
+        final String target;
+        switch (type) {
+            case fetchToday -> target = "weather";
+            case fetch7days -> {
+                target = "forecast7";
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        return "https://tianqi.moji.com/" + target + "/china" +
                 "/" + city.getProvince() +
                 "/" + city.getName();
     }
@@ -38,64 +49,113 @@ public class CityWeatherManager implements IManager<CityWeatherAction>, IUrlProv
     @Override
     public boolean execute(CityWeatherAction action) {
         city = action.getCityEntity();
-        final CityWeatherActionType type = action.getType();
+        type = action.getType();
         final var handler = new UrlHandler();
-        if (type == CityWeatherActionType.fetch) {
-            if (!handler.handle(getUrl(), emptyOptions)) {
-                handler.dispose();
-                action.setWeather(WeatherEntity.nullWeatherEntity);
-                return false;
-            }
-            try {
-                final var reader = handler.getReader();
-                final String title = handleTitle(reader);
-                if (title.equals("")) {
-                    handler.dispose();
-                    return false;
-                }
-                final String weaAlert = handleWeaAlert(reader);
-                final Map<String, String> weaWeather = handleWeaWeather(reader);
-                final Map<String, String> weaAbout = handleWeaAbout(reader);
-                final String weaTips = handleWeaTips(reader);
-                assert weaWeather != null;
-                assert weaAbout != null;
-                action.setWeather(new WeatherEntity(weaAlert,
-                        Integer.parseInt(weaWeather.get("temp")),
-                        weaAbout.get("humidity"),
-                        weaWeather.get("weather"),
-                        weaAbout.get("wind"),
-                        weaWeather.get("time"),
-                        weaTips));
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                action.setWeather(WeatherEntity.nullWeatherEntity);
-                return false;
-            } finally {
-                handler.dispose();
-            }
-        } else {
+        if (!handler.handle(getUrl(), emptyOptions)) {
+            handler.dispose();
+            action.setWeather(Collections.singletonList(WeatherEntity.nullWeatherEntity));
             return false;
         }
+        final var reader = handler.getReader();
+        try {
+            final String title = handleTitle(reader);
+            if (title.equals("")) {
+                handler.dispose();
+                return false;
+            }
+            switch (type) {
+                case fetchToday -> {
+                    final String weaAlert = handleWeaAlert(reader);
+                    final Map<String, String> weaWeather = handleWeaWeather(reader);
+                    final Map<String, String> weaAbout = handleWeaAbout(reader);
+                    final String weaTips = handleWeaTips(reader);
+                    assert weaWeather != null;
+                    assert weaAbout != null;
+                    action.setWeather(Collections.singletonList(new WeatherEntity(weaAlert,
+                            weaWeather.get("temp"),
+                            weaAbout.get("humidity"),
+                            weaWeather.get("weather"),
+                            weaAbout.get("wind"),
+                            weaWeather.get("time"),
+                            weaTips)));
+                    return true;
+                }
+
+                case fetch7days -> {
+                    final var result = handle7Days(reader);
+                    assert result != null;
+                    action.setWeather(result);
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            action.setWeather(Collections.singletonList(WeatherEntity.nullWeatherEntity));
+        } finally {
+            handler.dispose();
+        }
+        return false;
+    }
+
+    private List<WeatherEntity> handle7Days(BufferedReader reader) throws IOException {
+        final List<WeatherEntity> result = new ArrayList<>(7);
+        final String updateTime = handle7DaysUpdateTime(reader);
+        final String[][] weatherList = handle7DaysWeather(reader);
+        if (weatherList == null)
+            return null;
+        for (int i = 0; i < 7; i++)
+            result.add(new WeatherEntity("", weatherList[i][3] + " - " + weatherList[i][2], "", weatherList[i][1] + " " + weatherList[i][4], "", updateTime, weatherList[i][5] + " " + weatherList[i][0]));
+        return result;
+    }
+
+    private String handle7DaysUpdateTime(BufferedReader reader) throws IOException {
+        final Pattern updateTimePattern = Pattern.compile("\\s*<span>[^<]+</span>\\s*");
+        final Pattern updateTimeGroupPattern = Pattern.compile("(\\s*<span>)([^<]+)(</span>\\s*)");
+        return match(getStrByClassname(reader, "div", sevenDaysClasses[0], false), updateTimePattern, updateTimeGroupPattern);
+
+    }
+
+    private String[][] handle7DaysWeather(BufferedReader reader) throws IOException {
+        final String[][] result = new String[7][6];
+//        <span class="wea">雷阵雨</span>
+        final Pattern weatherPattern = Pattern.compile("\\s*<span class=\"wea\">[^<]+</span>\\s*");
+        final Pattern weatherGroupPattern = Pattern.compile("(\\s*<span class=\"wea\">)([^<]+)(</span>\\s*)");
+        final Pattern timePattern = Pattern.compile("\\s*<span class=\"week\">[^<]+</span>\\s*");
+        final Pattern timeGroupPattern = Pattern.compile("(\\s*<span class=\"week\">)([^<]+)(</span>\\s*)");
+        final Pattern lowTempPattern = Pattern.compile("\\s*<b>[^<]+</b>\\s*");
+        final Pattern lowTempGroupPattern = Pattern.compile("(\\s*<b>)([^<]+)(</b>\\s*)");
+        final Pattern highTempPattern = Pattern.compile("\\s*<strong>[^<]+</strong>\\s*");
+        final Pattern highTempGroupPattern = Pattern.compile("(\\s*<strong>)([^<]+)(</strong>\\s*)");
+        final Pattern[] patterns = {timePattern, weatherPattern, lowTempPattern, highTempPattern, weatherPattern, timePattern};
+        final Pattern[] groupPatterns = {timeGroupPattern, weatherGroupPattern, lowTempGroupPattern, highTempGroupPattern, weatherGroupPattern, timeGroupPattern};
+        final int[] magicNumbers = {0, 0, 1, 1, 2, 2};
+        for (int i = 0; i < 7; i++) {
+            final String[] str = getStrByClassname(reader, "li", "active", true).split("<img", 3);
+            for (int j = 0; j < 6; j++) {
+                if (match(str[magicNumbers[j]], patterns[j], groupPatterns[j]).equals("")) return null;
+                else result[i][j] = match(str[magicNumbers[j]], patterns[j], groupPatterns[j]);
+            }
+        }
+        return result;
+
     }
 
     private String handleWeaTips(BufferedReader reader) throws IOException {
 
         final Pattern tipsPattern = Pattern.compile("\\s*<em>[^<]+</em>\\s*");
         final Pattern tipsGroupPattern = Pattern.compile("(\\s*<em>)([^<]+)(</em>\\s*)");
-        final String str = getDivByClassname(reader, divClasses[3]);
+        final String str = getStrByClassname(reader, "div", toDayClasses[3], false);
         return match(str, tipsPattern, tipsGroupPattern);
     }
 
     private Map<String, String> handleWeaAbout(BufferedReader reader) throws IOException {
         final Map<String, String> map = new HashMap<>();
-
         final Pattern humidityPattern = Pattern.compile("\\s*<span>[^<]+</span>\\s*");
         final Pattern humidityGroupPattern = Pattern.compile("(\\s*<span>)([^<]+)(</span>\\s*)");
         final Pattern windPattern = Pattern.compile("\\s*<em>[^<]+</em>\\s*");
         final Pattern windGroupPattern = Pattern.compile("(\\s*<em>)([^<]+)(</em>\\s*)");
 
-        final String str = getDivByClassname(reader, divClasses[2]);
+        final String str = getStrByClassname(reader, "div", toDayClasses[2], false);
 
         if (match(str, humidityPattern, humidityGroupPattern).equals("")) return null;
         else map.put("humidity", match(str, humidityPattern, humidityGroupPattern));
@@ -114,7 +174,7 @@ public class CityWeatherManager implements IManager<CityWeatherAction>, IUrlProv
         final Pattern timePattern = Pattern.compile("\\s*<strong[^>]+>[^<]+</strong>\\s*");
         final Pattern timeGroupPattern = Pattern.compile("(\\s*<strong[^>]+>)([^<]+)(</strong>\\s*)");
 
-        final String str = getDivByClassname(reader, divClasses[1]);
+        final String str = getStrByClassname(reader, "div", toDayClasses[1], false);
 
         if (match(str, tempPattern, tempGroupPattern).equals("")) return null;
         else map.put("temp", match(str, tempPattern, tempGroupPattern));
@@ -130,7 +190,7 @@ public class CityWeatherManager implements IManager<CityWeatherAction>, IUrlProv
         final StringBuilder weaAlertStr = new StringBuilder();
         final Pattern alertPattern = Pattern.compile("\\s*<em>[^<]+</em>\\s*");
         final Pattern alertStrPattern = Pattern.compile("(\\s*<em>)([^<]+)(</em>\\s*)");
-        Matcher alertMatcher = alertPattern.matcher(getDivByClassname(reader, divClasses[0]));
+        Matcher alertMatcher = alertPattern.matcher(getStrByClassname(reader, "div", toDayClasses[0], false));
         while (alertMatcher.find()) {
             final Matcher matcher = alertStrPattern.matcher(alertMatcher.group());
             if (matcher.matches()) {

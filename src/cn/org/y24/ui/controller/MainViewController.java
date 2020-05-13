@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -321,7 +322,12 @@ public class MainViewController extends BaseStageController implements Initializ
 
 
     @FXML
-    private void doRecommend() {
+    private void doRecommend(KeyEvent keyEvent) {
+        final String s = keyEvent.getCharacter();
+        System.out.println(s);
+        if (s.equals("\r")) {
+            return;
+        }
         final String current = cityInputTextId.getText().toLowerCase();
         recommendListViewVisibility.setValue(false);
         recommendCityNameList.clear();
